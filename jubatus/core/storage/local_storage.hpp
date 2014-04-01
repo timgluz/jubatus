@@ -74,6 +74,8 @@ class local_storage : public storage_base {
       const std::string& dec_class);
 
   void register_label(const std::string& label);
+  void delete_class(const std::string& name);
+
   void clear();
   std::vector<std::string> get_labels() const;
   bool set_label(const std::string& label);
@@ -92,6 +94,7 @@ class local_storage : public storage_base {
   id_features3_t tbl_;
   common::key_manager class2id_;
 
+ private:
   friend class jubatus::util::data::serialization::access;
   template <class Ar>
   void serialize(Ar& ar) {
