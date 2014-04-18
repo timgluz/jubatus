@@ -139,6 +139,7 @@ TYPED_TEST_P(classifier_test, delete_class) {
   shared_ptr<local_storage> s(new local_storage);
   TypeParam p(s);
 
+<<<<<<< HEAD
   {
     common::sfv_t fv;
     fv.push_back(std::make_pair("f1", 1.f));
@@ -180,6 +181,27 @@ TYPED_TEST_P(classifier_test, delete_class) {
     }
     EXPECT_NE("B", p.classify(fv));
   }
+=======
+  common::sfv_t fv;
+  fv.push_back(std::make_pair("f1", 1.f));
+  p.train(fv, "A");
+
+  fv.clear();
+  fv.push_back(std::make_pair("f1", 1.f));
+  fv.push_back(std::make_pair("f2", 1.f));
+  p.train(fv, "B");
+
+  fv.clear();
+  fv.push_back(std::make_pair("f3", 1.f));
+  p.train(fv, "C");
+
+  p.delete_class("B");
+
+  fv.clear();
+  fv.push_back(std::make_pair("f1", 1.f));
+  fv.push_back(std::make_pair("f2", 1.f));
+  EXPECT_EQ("A", p.classify(fv));
+>>>>>>> 489a0d530fac1e8334a321fdd5ebb2e42e794ef0
 }
 
 TYPED_TEST_P(classifier_test, unlearning) {

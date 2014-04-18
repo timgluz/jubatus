@@ -104,16 +104,6 @@ void local_storage::inp(const common::sfv_t& sfv, map_feature_val1_t& ret)
       ret[label] = ret_id[id];
     }
   }
-
-  /*  debug out
-  std::cout << "{";
-  for (map_feature_val1_t::const_iterator it = ret.begin();
-       it != ret.end();
-       ++it) {
-    std::cout << it->first << "->" << it->second << ", ";
-  }
-  std::cout << "}" << std::endl;
-  //  */
 }
 
 void local_storage::set(
@@ -202,15 +192,14 @@ bool local_storage::set_label(const std::string& label) {
 }
 
 void local_storage::delete_class(const std::string& name) {
-  const uint64_t delete_id = class2id_.get_id_const(name);
-  if (delete_id == common::key_manager::NOTFOUND) {
+  uint64_t delete_id = class2id_.get_id_const(name);
+  if (delete_id == common::key_manager::NOTFOUND)
     return;
-  }
   for (id_features3_t::iterator it = tbl_.begin();
        it != tbl_.end();
        ++it) {
-    const bool deleted = it->second.erase(delete_id);
-    if (deleted && it->second.empty()) {
+    it->second.erase(delete_id);
+    if (it->second.empty()) {
       tbl_.erase(it);
     }
   }

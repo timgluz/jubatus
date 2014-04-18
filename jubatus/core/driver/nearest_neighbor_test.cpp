@@ -29,6 +29,7 @@
 #include "../unlearner/unlearner.hpp"
 #include "nearest_neighbor.hpp"
 #include "test_util.hpp"
+#include "../unlearner/unlearner.hpp"
 
 using std::vector;
 using std::pair;
@@ -87,7 +88,38 @@ fv_converter::datum create_datum_2d(float x, float y) {
   return create_datum(vec, vec + 2);
 }
 
+<<<<<<< HEAD
 /*
+=======
+vector<shared_ptr<driver::nearest_neighbor> > create_nearest_neighbors() {
+  vector<shared_ptr<driver::nearest_neighbor> > method;
+
+  vector<pair<string, int> > pattern;
+  for (size_t i = 8; i < 3000; i = i << 1) {  // up to 2048
+    pattern.push_back(make_pair("lsh", i));
+    pattern.push_back(make_pair("euclid_lsh", i));
+    pattern.push_back(make_pair("minhash", i));
+  }
+  for (size_t i = 0; i < pattern.size(); ++i) {
+    shared_ptr<core::table::column_table> table(new core::table::column_table);
+
+    json jsconf(new json_object);
+    jsconf["hash_num"] = new json_integer(pattern[i].second);
+    common::jsonconfig::config conf(jsconf);
+    method.push_back(
+        shared_ptr<driver::nearest_neighbor>(
+            new driver::nearest_neighbor(
+                core::nearest_neighbor::create_nearest_neighbor(
+                    pattern[i].first,
+                    conf,
+                    table,
+                    ""),
+                make_fv_converter())));
+  }
+  return method;
+}
+
+>>>>>>> 489a0d530fac1e8334a321fdd5ebb2e42e794ef0
 std::vector<shared_ptr<nearest_neighbor_base> > create_nearest_neighbor_bases() {
   const std::string id("my_id");
   std::vector<shared_ptr<nearest_neighbor_base> > nearest_neighbors;
@@ -109,6 +141,7 @@ std::vector<shared_ptr<nearest_neighbor_base> > create_nearest_neighbor_bases() 
             pattern[i].first,
             conf,
             table,
+<<<<<<< HEAD
             id));
   }
   return nearest_neighbors;
@@ -130,6 +163,12 @@ std::vector<shared_ptr<nearest_neighbor_base> > create_nearest_neighbor_bases() 
 
   return nearest_neighbors;
 }
+=======
+            ""));
+  }
+  return nearest_neighbors;
+}
+>>>>>>> 489a0d530fac1e8334a321fdd5ebb2e42e794ef0
 
 const size_t MAX_SIZE = 3;
 
